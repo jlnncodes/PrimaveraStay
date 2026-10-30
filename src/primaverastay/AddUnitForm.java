@@ -1,0 +1,731 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package primaverastay;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+/**
+ *
+ * @author Potpot
+ */
+public class AddUnitForm extends javax.swing.JFrame {
+
+    private java.io.File[] selectedPhotos = new java.io.File[0];
+    
+    private String copyUnitPhoto(java.io.File source, int unitId, int order)
+        throws java.io.IOException {
+
+    java.nio.file.Path folder = java.nio.file.Paths.get(
+            System.getProperty("user.dir"),
+            "uploaded_unit_photos"
+    );
+
+    java.nio.file.Files.createDirectories(folder);
+
+    String fileName = source.getName();
+    String extension = fileName.substring(
+            fileName.lastIndexOf(".")
+    ).toLowerCase();
+
+    String newFileName = "unit_" + unitId
+            + "_photo_" + order + extension;
+
+    java.nio.file.Path destination = folder.resolve(newFileName);
+
+    java.nio.file.Files.copy(
+            source.toPath(),
+            destination,
+            java.nio.file.StandardCopyOption.REPLACE_EXISTING
+    );
+
+    return destination.toAbsolutePath().toString();
+}
+    
+    private void showPhotoPreview(javax.swing.JLabel label, java.io.File photo) {
+    try {
+        java.awt.image.BufferedImage image =
+                javax.imageio.ImageIO.read(photo);
+
+        if (image == null) {
+            return;
+        }
+
+        int width = label.getWidth();
+        int height = label.getHeight();
+
+        if (width <= 0 || height <= 0) {
+            width = 150;
+            height = 120;
+        }
+
+        java.awt.Image scaledImage = image.getScaledInstance(
+                width, height, java.awt.Image.SCALE_SMOOTH
+        );
+
+        label.setIcon(new javax.swing.ImageIcon(scaledImage));
+        label.setText("");
+
+    } catch (java.io.IOException e) {
+        javax.swing.JOptionPane.showMessageDialog(
+                this, "Unable to load photo: " + e.getMessage()
+        );
+    }
+}
+    
+    /**
+     * Creates new form AddUnitForm
+     */
+    
+
+public AddUnitForm() {
+    initComponents();
+    setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    applyPrimaveraDesign();
+}
+
+private void applyPrimaveraDesign() {
+
+    // Main window
+    getContentPane().setBackground(
+        PrimaveraStyle.CREAM
+    );
+
+    // Cards
+    PrimaveraStyle.styleCard(pnlUnitInfo);
+    PrimaveraStyle.styleCard(pnlUnitPhotos);
+
+    // Text fields
+    PrimaveraStyle.styleField(txtUnitNumber);
+    PrimaveraStyle.styleField(txtUnitType);
+    PrimaveraStyle.styleField(txtCapacity);
+    PrimaveraStyle.styleField(txtPricePerNight);
+
+    // Text areas
+    PrimaveraStyle.styleTextArea(txtDescription);
+    PrimaveraStyle.styleTextArea(txtAmenities);
+
+    // Text area borders
+    jScrollPane1.setBorder(
+        javax.swing.BorderFactory.createLineBorder(
+            PrimaveraStyle.BORDER
+        )
+    );
+
+    jScrollPane2.setBorder(
+        javax.swing.BorderFactory.createLineBorder(
+            PrimaveraStyle.BORDER
+        )
+    );
+
+    // Section title
+    lblTitle.setText("Add New Unit");
+    lblTitle.setForeground(PrimaveraStyle.DARK);
+    lblTitle.setFont(
+        new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 28)
+    );
+
+    // Field labels
+    PrimaveraStyle.styleLabel(jLabel1);
+    PrimaveraStyle.styleLabel(jLabel2);
+    PrimaveraStyle.styleLabel(jLabel3);
+    PrimaveraStyle.styleLabel(jLabel4);
+    PrimaveraStyle.styleLabel(jLabel5);
+    PrimaveraStyle.styleLabel(jLabel7);
+    PrimaveraStyle.styleLabel(jLabel8);
+
+    // Status dropdown
+    cmbStatus.setBackground(java.awt.Color.WHITE);
+    cmbStatus.setForeground(PrimaveraStyle.DARK);
+    cmbStatus.setFont(
+        new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14)
+    );
+
+    // Buttons
+    PrimaveraStyle.stylePrimaryButton(btnAddUnit);
+    PrimaveraStyle.styleSecondaryButton(btnCancel);
+    PrimaveraStyle.styleSecondaryButton(btnSelectPhotos);
+
+    // Photo card heading
+    jLabel6.setForeground(PrimaveraStyle.DARK);
+    jLabel6.setFont(
+        new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 19)
+    );
+
+    // Photo preview borders
+    javax.swing.border.Border photoBorder =
+        javax.swing.BorderFactory.createLineBorder(
+            PrimaveraStyle.BORDER, 1
+        );
+
+    lblPhoto1.setBorder(photoBorder);
+    lblPhoto2.setBorder(photoBorder);
+    lblPhoto3.setBorder(photoBorder);
+
+    // Photo instructions
+    lblPhotoInstructions.setForeground(
+        PrimaveraStyle.MUTED
+    );
+
+    // Refresh layout
+    revalidate();
+    repaint();
+}
+
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        btnCancel = new javax.swing.JButton();
+        btnAddUnit = new javax.swing.JButton();
+        pnlUnitPhotos = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        btnSelectPhotos = new javax.swing.JButton();
+        lblPhoto1 = new javax.swing.JLabel();
+        lblPhoto2 = new javax.swing.JLabel();
+        lblPhoto3 = new javax.swing.JLabel();
+        lblPhotoInstructions = new javax.swing.JLabel();
+        pnlUnitInfo = new javax.swing.JPanel();
+        txtUnitNumber = new javax.swing.JTextField();
+        lblTitle = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAmenities = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescription = new javax.swing.JTextArea();
+        cmbStatus = new javax.swing.JComboBox<>();
+        txtPricePerNight = new javax.swing.JTextField();
+        txtCapacity = new javax.swing.JTextField();
+        txtUnitType = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(242, 247, 252));
+        setSize(new java.awt.Dimension(500, 430));
+
+        btnCancel.setBackground(new java.awt.Color(227, 237, 247));
+        btnCancel.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(36, 71, 107));
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        btnAddUnit.setBackground(new java.awt.Color(74, 144, 196));
+        btnAddUnit.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnAddUnit.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddUnit.setText("Add Unit");
+        btnAddUnit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddUnitActionPerformed(evt);
+            }
+        });
+
+        pnlUnitPhotos.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(36, 71, 107));
+        jLabel6.setText("Unit Photos");
+
+        btnSelectPhotos.setText("+ Select Photos");
+        btnSelectPhotos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectPhotosActionPerformed(evt);
+            }
+        });
+
+        lblPhoto1.setBackground(new java.awt.Color(255, 255, 255));
+        lblPhoto1.setForeground(new java.awt.Color(35, 70, 109));
+        lblPhoto1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPhoto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/primaverastay/images/smallerphoto.png"))); // NOI18N
+        lblPhoto1.setText("Photo 1");
+        lblPhoto1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(185, 207, 228)));
+        lblPhoto1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblPhoto1.setIconTextGap(8);
+        lblPhoto1.setOpaque(true);
+        lblPhoto1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        lblPhoto2.setBackground(new java.awt.Color(255, 255, 255));
+        lblPhoto2.setForeground(new java.awt.Color(35, 70, 109));
+        lblPhoto2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPhoto2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/primaverastay/images/smallerphoto.png"))); // NOI18N
+        lblPhoto2.setText("Photo 2");
+        lblPhoto2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(185, 207, 228)));
+        lblPhoto2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblPhoto2.setIconTextGap(8);
+        lblPhoto2.setOpaque(true);
+        lblPhoto2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        lblPhoto3.setBackground(new java.awt.Color(255, 255, 255));
+        lblPhoto3.setForeground(new java.awt.Color(35, 70, 109));
+        lblPhoto3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPhoto3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/primaverastay/images/smallerphoto.png"))); // NOI18N
+        lblPhoto3.setText("Photo 3");
+        lblPhoto3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(185, 207, 228)));
+        lblPhoto3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblPhoto3.setIconTextGap(8);
+        lblPhoto3.setOpaque(true);
+        lblPhoto3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        lblPhotoInstructions.setForeground(new java.awt.Color(96, 125, 152));
+        lblPhotoInstructions.setText("Upload up to 3 photos of the unit (JPG or PNG).");
+
+        javax.swing.GroupLayout pnlUnitPhotosLayout = new javax.swing.GroupLayout(pnlUnitPhotos);
+        pnlUnitPhotos.setLayout(pnlUnitPhotosLayout);
+        pnlUnitPhotosLayout.setHorizontalGroup(
+            pnlUnitPhotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlUnitPhotosLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(pnlUnitPhotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPhotoInstructions)
+                    .addComponent(btnSelectPhotos)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlUnitPhotosLayout.createSequentialGroup()
+                        .addComponent(lblPhoto1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPhoto2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPhoto3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(64, Short.MAX_VALUE))
+        );
+        pnlUnitPhotosLayout.setVerticalGroup(
+            pnlUnitPhotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlUnitPhotosLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSelectPhotos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlUnitPhotosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPhoto1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPhoto2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPhoto3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPhotoInstructions)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        pnlUnitInfo.setBackground(new java.awt.Color(255, 255, 255));
+
+        txtUnitNumber.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtUnitNumber.setForeground(new java.awt.Color(36, 71, 107));
+        txtUnitNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUnitNumberActionPerformed(evt);
+            }
+        });
+
+        lblTitle.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(36, 71, 107));
+        lblTitle.setText("Add New Unit");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(36, 71, 107));
+        jLabel1.setText("Unit Number:");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(36, 71, 107));
+        jLabel2.setText("Unit Type:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(36, 71, 107));
+        jLabel3.setText("Capacity:");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(36, 71, 107));
+        jLabel4.setText("Price per Night: ");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(36, 71, 107));
+        jLabel5.setText("Status:");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(36, 71, 107));
+        jLabel7.setText("Description:");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(36, 71, 107));
+        jLabel8.setText("Amenities:");
+
+        txtAmenities.setColumns(20);
+        txtAmenities.setRows(5);
+        jScrollPane2.setViewportView(txtAmenities);
+
+        txtDescription.setColumns(20);
+        txtDescription.setRows(5);
+        jScrollPane1.setViewportView(txtDescription);
+
+        cmbStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbStatus.setForeground(new java.awt.Color(36, 71, 107));
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Maintenance", "Inactive" }));
+
+        txtPricePerNight.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPricePerNight.setForeground(new java.awt.Color(36, 71, 107));
+
+        txtCapacity.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCapacity.setForeground(new java.awt.Color(36, 71, 107));
+        txtCapacity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCapacityActionPerformed(evt);
+            }
+        });
+
+        txtUnitType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtUnitType.setForeground(new java.awt.Color(36, 71, 107));
+
+        javax.swing.GroupLayout pnlUnitInfoLayout = new javax.swing.GroupLayout(pnlUnitInfo);
+        pnlUnitInfo.setLayout(pnlUnitInfoLayout);
+        pnlUnitInfoLayout.setHorizontalGroup(
+            pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlUnitInfoLayout.createSequentialGroup()
+                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlUnitInfoLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(lblTitle)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlUnitInfoLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlUnitInfoLayout.createSequentialGroup()
+                                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(77, 77, 77)
+                                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1)))
+                            .addGroup(pnlUnitInfoLayout.createSequentialGroup()
+                                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(49, 49, 49)
+                                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtPricePerNight)
+                                    .addComponent(txtUnitNumber)
+                                    .addGroup(pnlUnitInfoLayout.createSequentialGroup()
+                                        .addComponent(txtCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(txtUnitType))))))
+                .addGap(103, 103, 103))
+        );
+        pnlUnitInfoLayout.setVerticalGroup(
+            pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlUnitInfoLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lblTitle)
+                .addGap(50, 50, 50)
+                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtUnitNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txtUnitType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(txtCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtPricePerNight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlUnitInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlUnitInfoLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel8))
+                    .addGroup(pnlUnitInfoLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(pnlUnitInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlUnitPhotos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCancel)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAddUnit)))
+                .addGap(35, 35, 35))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlUnitPhotos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCancel)
+                            .addComponent(btnAddUnit)))
+                    .addComponent(pnlUnitInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(114, 114, 114))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtUnitNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnitNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUnitNumberActionPerformed
+
+    private void txtCapacityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCapacityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCapacityActionPerformed
+
+    private void btnAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUnitActionPerformed
+        
+String unitNumber = txtUnitNumber.getText().trim();
+String unitType = txtUnitType.getText().trim();
+String capacityText = txtCapacity.getText().trim();
+String priceText = txtPricePerNight.getText().trim();
+String status = cmbStatus.getSelectedItem().toString();
+String description = txtDescription.getText().trim();
+String amenities = txtAmenities.getText().trim();
+
+// Check empty fields
+if (unitNumber.isEmpty() || unitType.isEmpty()
+        || capacityText.isEmpty() || priceText.isEmpty()) {
+
+    javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Please complete all fields."
+    );
+    return;
+}
+
+try {
+
+    int capacity = Integer.parseInt(capacityText);
+    double pricePerNight = Double.parseDouble(priceText);
+
+    // Validate numbers
+    if (capacity <= 0 || pricePerNight < 0) {
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Capacity must be greater than 0 and price cannot be negative."
+        );
+        return;
+    }
+
+    UnitDAO unitDAO = new UnitDAO();
+
+    boolean added = unitDAO.addUnit(
+            unitNumber,
+            unitType,
+            capacity,
+            pricePerNight,
+            status,
+            description,
+            amenities
+    );
+
+    if (added) {
+        
+        int newUnitId = unitDAO.getLastInsertedUnitId();
+boolean photosSaved = true;
+
+for (int i = 0; i < selectedPhotos.length; i++) {
+    try {
+        String photoPath = copyUnitPhoto(
+                selectedPhotos[i], newUnitId, i + 1
+        );
+
+        boolean saved = unitDAO.addUnitPhoto(
+                newUnitId, photoPath, i + 1
+        );
+
+        if (!saved) {
+            photosSaved = false;
+        }
+
+    } catch (java.io.IOException e) {
+        e.printStackTrace();
+        photosSaved = false;
+    }
+}
+
+if (photosSaved) {
+    javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Unit and photos saved successfully!"
+    );
+} else {
+    javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Unit added, but some photos could not be saved."
+    );
+}
+
+dispose();
+
+    } else {
+
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Unable to add unit."
+        );
+    }
+
+} catch (NumberFormatException e) {
+
+    javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Capacity must be a whole number and price must be a valid number."
+    );
+}
+    }//GEN-LAST:event_btnAddUnitActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+    
+        dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnSelectPhotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectPhotosActionPerformed
+        
+JFileChooser fileChooser = new JFileChooser();
+
+fileChooser.setDialogTitle("Select Unit Photos");
+fileChooser.setMultiSelectionEnabled(true);
+
+javax.swing.filechooser.FileNameExtensionFilter filter =
+    new javax.swing.filechooser.FileNameExtensionFilter(
+        "Image Files (JPG, PNG)", "jpg", "jpeg", "png"
+    );
+
+fileChooser.setFileFilter(filter);
+
+int result = fileChooser.showOpenDialog(this);
+
+if (result == JFileChooser.APPROVE_OPTION) {
+    java.io.File[] selectedFiles = fileChooser.getSelectedFiles();
+    
+    selectedPhotos = selectedFiles;
+    
+    if (selectedFiles.length > 3) {
+    return;
+}
+
+javax.swing.JLabel[] photoLabels = {
+    lblPhoto1, lblPhoto2, lblPhoto3
+};
+
+for (int i = 0; i < photoLabels.length; i++) {
+    photoLabels[i].setIcon(null);
+    photoLabels[i].setText("Photo " + (i + 1));
+
+    if (i < selectedFiles.length) {
+        showPhotoPreview(photoLabels[i], selectedFiles[i]);
+    }
+}
+
+    if (selectedFiles.length > 3) {
+        JOptionPane.showMessageDialog(this,
+            "You can only select up to 3 photos.");
+        return;
+    }
+
+    JOptionPane.showMessageDialog(this,
+        selectedFiles.length + " photo(s) selected successfully!");
+}
+    }//GEN-LAST:event_btnSelectPhotosActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AddUnitForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AddUnitForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AddUnitForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AddUnitForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AddUnitForm().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddUnit;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnSelectPhotos;
+    private javax.swing.JComboBox<String> cmbStatus;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblPhoto1;
+    private javax.swing.JLabel lblPhoto2;
+    private javax.swing.JLabel lblPhoto3;
+    private javax.swing.JLabel lblPhotoInstructions;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JPanel pnlUnitInfo;
+    private javax.swing.JPanel pnlUnitPhotos;
+    private javax.swing.JTextArea txtAmenities;
+    private javax.swing.JTextField txtCapacity;
+    private javax.swing.JTextArea txtDescription;
+    private javax.swing.JTextField txtPricePerNight;
+    private javax.swing.JTextField txtUnitNumber;
+    private javax.swing.JTextField txtUnitType;
+    // End of variables declaration//GEN-END:variables
+}
